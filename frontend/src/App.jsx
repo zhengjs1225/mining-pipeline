@@ -19,75 +19,77 @@ export default function App() {
     run(params);
   };
 
+  // Add loading class to body for Gemini-style intensified gradient
+  if (typeof document !== "undefined") {
+    document.body.className = loading ? "loading" : "";
+  }
+
   return (
     <ConfigProvider
       theme={{
         algorithm: theme.darkAlgorithm,
         token: {
-          colorPrimary: "#d4855e",
-          borderRadius: 16,
-          colorBgContainer: "rgba(26,35,50,.7)",
-          colorBgElevated: "rgba(30,45,60,.8)",
-          colorBorder: "rgba(255,255,255,.06)",
-          colorText: "#eef0f6",
-          colorTextSecondary: "#8899bb",
-          fontFamily: "'Noto Sans SC', 'Space Grotesk', sans-serif",
-          fontSize: 15,
-          paddingLG: 20,
+          colorPrimary: "#8ab4f8",
+          borderRadius: 20,
+          colorBgContainer: "#1a1a1e",
+          colorBgElevated: "#222228",
+          colorBorder: "#2a2a30",
+          colorText: "#f1f1f3",
+          colorTextSecondary: "#9a9aa0",
+          fontFamily: "'Manrope', 'Noto Sans SC', sans-serif",
+          fontSize: 14,
+          paddingLG: 18,
         },
       }}
     >
       <Layout className="app-layout">
-        {/* ── Header: Soft glass ── */}
+        {/* Header: Gemini-style ultra minimal */}
         <Header className="app-header">
           <div className="header-left">
             <div className="app-logo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round">
-                <path d="m21 16-3 3-3-3" /><path d="M18 19V5" />
-                <path d="M3 8l3-3 3 3" /><path d="M6 5v14" />
-                <circle cx="12" cy="12" r="2" />
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 2v4m0 12v4M2 12h4m12 0h4" />
               </svg>
             </div>
-            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 17, color: "#eef0f6", letterSpacing: "-0.02em" }}>
-              Mining Intelligence
-            </span>
+            <span className="brand-name">Mining Intelligence</span>
           </div>
           <StatsBar />
         </Header>
 
         <Content className="app-content">
-          {/* ── Hero ── */}
+          {/* Hero: Centered, large, welcoming */}
           <div className="hero">
             <h2 className="hero-title">News · Policy · Prices</h2>
             <p className="hero-sub">
-              Search across mining news, critical mineral policy, and commodity
-              prices — powered by semantic retrieval and AI-generated answers.
+              Search mining news, critical mineral policy, and commodity prices
+              — powered by semantic retrieval and AI answers
             </p>
           </div>
 
-          {/* ── Search ── */}
+          {/* Search */}
           <SearchBar onSearch={handleSearch} loading={loading} />
 
-          {/* ── Error ── */}
+          {/* Error */}
           {error && (
             <div className="error-banner">
               <span>{error}</span>
             </div>
           )}
 
-          {/* ── Gemini-style pulsing orb loading ── */}
+          {/* Loading: Gemini pulsating orb */}
           {loading && (
             <div className="loading-state">
               <div className="loading-orb" />
-              <span className="loading-text">Searching across 7 mining sources...</span>
+              <span className="loading-text">Searching across sources...</span>
             </div>
           )}
 
-          {/* ── Results ── */}
+          {/* Results */}
           {result && !loading && (
             <div className="results-section">
               <div className="results-meta">
-                <Text strong style={{ color: "#eef0f6" }}>
+                <Text strong style={{ color: "#f1f1f3" }}>
                   &ldquo;{lastQuestion}&rdquo;
                 </Text>
                 <Text type="secondary">
@@ -109,15 +111,15 @@ export default function App() {
             </div>
           )}
 
-          {/* ── Empty ── */}
+          {/* Empty */}
           {!result && !loading && !error && (
             <div className="empty-state">
               <div className="empty-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" opacity=".4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" opacity=".3">
                   <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
                 </svg>
               </div>
-              <Text type="secondary" style={{ fontSize: 15, fontWeight: 300 }}>
+              <Text type="secondary" style={{ fontSize: 14, fontWeight: 400 }}>
                 Ask a question above to search the mining intelligence corpus
               </Text>
             </div>

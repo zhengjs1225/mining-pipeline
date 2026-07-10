@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Input, Select, Button, Space, Tag } from "antd";
-import { SearchOutlined, LoadingOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 
 const SOURCES = [
   { value: "", label: "All Sources" },
@@ -57,64 +57,70 @@ export default function SearchBar({ onSearch, loading }) {
   return (
     <div className="search-section">
       <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+        {/* Pill-shaped search — Gemini style */}
         <Input.Search
           size="large"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           onSearch={handleSearch}
-          placeholder="Ask anything about mining — news, policy, or prices..."
+          placeholder="Ask anything about mining..."
           enterButton={
-            <Button type="primary" loading={loading} icon={loading ? undefined : <SearchOutlined />}>
-              {loading ? "Searching" : "Search"}
+            <Button
+              type="primary"
+              loading={loading}
+              icon={loading ? undefined : <SearchOutlined />}
+            >
+              {loading ? "" : "Search"}
             </Button>
           }
           disabled={loading}
-          autoFocus
         />
 
-        <Space wrap>
-          <Select
-            value={source || undefined}
-            onChange={setSource}
-            options={SOURCES}
-            style={{ width: 160 }}
-            placeholder="Source"
-            allowClear
-            onClear={() => setSource("")}
-          />
-          <Select
-            value={category || undefined}
-            onChange={setCategory}
-            options={CATEGORIES}
-            style={{ width: 150 }}
-            placeholder="Category"
-            allowClear
-            onClear={() => setCategory("")}
-          />
-          <Select
-            value={topK}
-            onChange={setTopK}
-            options={[
-              { value: 3, label: "Top 3" },
-              { value: 5, label: "Top 5" },
-              { value: 10, label: "Top 10" },
-            ]}
-            style={{ width: 100 }}
-          />
-        </Space>
+        {/* Filters — subtle, inline */}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Space size={8}>
+            <Select
+              value={source || undefined}
+              onChange={setSource}
+              options={SOURCES}
+              style={{ width: 150 }}
+              placeholder="Source"
+              allowClear
+              onClear={() => setSource("")}
+              size="small"
+            />
+            <Select
+              value={category || undefined}
+              onChange={setCategory}
+              options={CATEGORIES}
+              style={{ width: 140 }}
+              placeholder="Category"
+              allowClear
+              onClear={() => setCategory("")}
+              size="small"
+            />
+            <Select
+              value={topK}
+              onChange={setTopK}
+              options={[
+                { value: 3, label: "Top 3" },
+                { value: 5, label: "Top 5" },
+                { value: 10, label: "Top 10" },
+              ]}
+              style={{ width: 90 }}
+              size="small"
+            />
+          </Space>
+        </div>
 
-        <Space wrap size={[4, 4]}>
+        {/* Suggestion pills — centered, Gemini style */}
+        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 6, paddingTop: 4 }}>
           {EXAMPLES.map((q) => (
-            <Tag
-              key={q}
-              color="blue"
-              style={{ cursor: "pointer", padding: "4px 10px", fontSize: 13 }}
-              onClick={() => handleExample(q)}
-            >
+            <Tag key={q} onClick={() => handleExample(q)}>
               {q}
             </Tag>
           ))}
-        </Space>
+        </div>
       </Space>
     </div>
   );

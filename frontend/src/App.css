@@ -1,466 +1,306 @@
 /* ═══════════════════════════════════════════════════════
-   Mining Intelligence — Neural Mineral Theme
-   Fusion: Gemini Neural Expressive × Industrial Mining
+   Mining Intelligence — Gemini Web App Style
+   Reference: gemini.google.com/app (Neural Expressive)
    ═══════════════════════════════════════════════════════ */
 
-/* ── Fonts ───────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ── Design Tokens ────────────────────────────────────── */
+/* ── Tokens ──────────────────────────────────────────── */
 :root {
-  /* Mineral Spectrum (Gemini-inspired gradient palette) */
-  --mineral-deep:    #0a0f1a;
-  --mineral-earth:   #111827;
-  --mineral-slate:   #1a2332;
-  --mineral-surface: #1e2d3d;
+  --bg-true-black: #000000;
+  --bg-surface:    #111114;
+  --bg-card:       #1a1a1e;
+  --bg-hover:      #222228;
+  --bg-input:      #1c1c20;
 
-  /* Warm metallic accents */
-  --copper:      #d4855e;
-  --copper-soft: #e8b89d;
-  --gold:        #c9a85c;
-  --gold-soft:   #dfc98a;
-  --teal:        #5ec4d0;
-  --teal-soft:   #8ddbe3;
+  --text-primary:   #f1f1f3;
+  --text-secondary: #9a9aa0;
+  --text-muted:     #666670;
 
-  /* Category colors */
-  --cat-news:   #d4855e;
-  --cat-policy: #6b9ce8;
-  --cat-price:  #5ec4d0;
+  --border-subtle: #2a2a30;
+  --border-glow:   rgba(180,160,220,.3);
 
-  /* Surfaces */
-  --bg-root:      var(--mineral-deep);
-  --bg-card:      rgba(26,35,50,.7);
-  --bg-card-hover: rgba(30,45,60,.85);
-  --bg-input:     rgba(15,22,34,.8);
-  --bg-glass:     rgba(26,35,50,.55);
+  --accent-blue:   #8ab4f8;
+  --accent-purple: #c4a7f8;
+  --accent-teal:   #78c8b8;
+  --copper:        #d4855e;
 
-  /* Text */
-  --text-primary:   #eef0f6;
-  --text-secondary: #8899bb;
-  --text-muted:     #556680;
+  --font-ui:  'Manrope', 'Noto Sans SC', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
-  /* Borders */
-  --border-glass:  rgba(255,255,255,.06);
-  --border-soft:   rgba(255,255,255,.10);
-  --border-glow:   rgba(212,133,94,.25);
+  --radius-pill: 28px;
+  --radius-card: 20px;
+  --radius-sm:   12px;
 
-  /* Typography */
-  --font-display: 'Space Grotesk', 'Noto Sans SC', sans-serif;
-  --font-body:    'Noto Sans SC', 'PingFang SC', sans-serif;
-  --font-mono:    'JetBrains Mono', monospace;
-
-  /* Motion */
   --ease-gemini: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Global Reset ─────────────────────────────────────── */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  background: var(--bg-root);
-  color: var(--text-secondary);
-  font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+/* ── Reset ───────────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg-true-black);
+  color:var(--text-secondary);
+  font-family:var(--font-ui);
+  font-size:14px;
+  font-weight:400;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
 }
 
 /* ═══════════════════════════════════════════════════════
-   Gemini-inspired Mineral Spectrum Background
-   Multi-layered soft gradients + particle field
+   Gemini-style pulsating gradient background
    ═══════════════════════════════════════════════════════ */
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  /* Spectrum gradient — deep blue → purple → copper → teal (warm mineral shift) */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(ellipse 80% 60% at 30% 20%, rgba(110,140,200,.06) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 75% 30%, rgba(212,133,94,.05) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 70% at 60% 80%, rgba(94,196,208,.04) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 40% at 20% 70%, rgba(201,168,92,.03) 0%, transparent 45%);
+    radial-gradient(ellipse 60% 50% at 50% 40%, rgba(140,160,220,.04) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 30% 60%, rgba(180,140,210,.03) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 35% at 70% 50%, rgba(120,200,180,.03) 0%, transparent 55%);
+  animation:geminiPulse 8s ease-in-out infinite;
 }
 
-/* ── Particle field (mineral dust) ────────────────────── */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    radial-gradient(1px 1px at 15% 25%, rgba(212,133,94,.3), transparent),
-    radial-gradient(1px 1px at 28% 42%, rgba(201,168,92,.25), transparent),
-    radial-gradient(1.5px 1.5px at 55% 18%, rgba(110,140,200,.3), transparent),
-    radial-gradient(1px 1px at 72% 55%, rgba(94,196,208,.25), transparent),
-    radial-gradient(1px 1px at 38% 68%, rgba(212,133,94,.2), transparent),
-    radial-gradient(1.5px 1.5px at 62% 35%, rgba(201,168,92,.3), transparent),
-    radial-gradient(1px 1px at 85% 72%, rgba(110,140,200,.2), transparent),
-    radial-gradient(1px 1px at 10% 78%, rgba(94,196,208,.2), transparent),
-    radial-gradient(1.5px 1.5px at 45% 85%, rgba(212,133,94,.25), transparent),
-    radial-gradient(1px 1px at 92% 12%, rgba(201,168,92,.2), transparent);
-  animation: particleDrift 20s ease-in-out infinite;
+@keyframes geminiPulse{
+  0%,100%{opacity:.7}
+  33%{opacity:1}
+  66%{opacity:.5}
 }
 
-@keyframes particleDrift {
-  0%, 100% { opacity: .7; transform: translate(0, 0); }
-  25%      { opacity: 1; transform: translate(2px, -3px); }
-  50%      { opacity: .6; transform: translate(-1px, 2px); }
-  75%      { opacity: .9; transform: translate(3px, -1px); }
+/* ── Processing state: intensified gradient ──────────── */
+body.loading::before{
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 40%, rgba(140,160,220,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 30% 60%, rgba(180,140,210,.06) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 45% at 70% 50%, rgba(120,200,180,.06) 0%, transparent 45%);
+  animation:geminiPulse 2s ease-in-out infinite;
 }
 
-/* ── Layout ───────────────────────────────────────────── */
-.app-layout { min-height: 100vh; background: transparent; position: relative; z-index: 1; }
+/* ── Layout ──────────────────────────────────────────── */
+.app-layout{min-height:100vh;background:transparent;position:relative;z-index:1}
 
 /* ═══════════════════════════════════════════════════════
-   Header — Soft glass with subtle blur
+   Header — ultra minimal, Gemini-style top bar
    ═══════════════════════════════════════════════════════ */
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 28px;
-  height: 56px;
-  background: rgba(17,24,39,.75);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border-bottom: 1px solid var(--border-glass);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+.app-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;height:52px;
+  background:transparent;
+  position:sticky;top:0;z-index:100;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.header-left{display:flex;align-items:center;gap:10px}
+
+/* ── Model-picker style logo ─────────────────────────── */
+.app-logo{
+  width:30px;height:30px;border-radius:50%;
+  background:linear-gradient(135deg, #8ab4f8 0%, #c4a7f8 50%, #78c8b8 100%);
+  display:flex;align-items:center;justify-content:center;
 }
 
-.header-left .app-logo {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--copper) 0%, var(--gold) 50%, var(--teal) 100%);
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 16px rgba(212,133,94,.25);
-  animation: logoGlow 4s ease-in-out infinite;
+.header-left .brand-name{
+  font-family:var(--font-ui);font-weight:600;font-size:15px;
+  color:var(--text-primary);letter-spacing:-.01em;
 }
 
-@keyframes logoGlow {
-  0%, 100% { box-shadow: 0 0 12px rgba(212,133,94,.2); }
-  50%      { box-shadow: 0 0 24px rgba(212,133,94,.4); }
-}
-
-/* ── Content ──────────────────────────────────────────── */
-.app-content {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 32px 24px 56px;
-  position: relative;
-  z-index: 1;
+/* ── Content ─────────────────────────────────────────── */
+.app-content{
+  max-width:720px;margin:0 auto;padding:16px 20px 80px;
+  position:relative;z-index:1;
 }
 
 /* ═══════════════════════════════════════════════════════
-   Hero — Gemini-style gradient typography
+   Hero — centered Gemini style: "Hi, what's on your mind?"
    ═══════════════════════════════════════════════════════ */
-.hero {
-  text-align: center;
-  margin-bottom: 36px;
-  padding: 20px 0 4px;
+.hero{
+  text-align:center;margin-bottom:24px;padding:48px 0 12px;
 }
 
-.hero-title {
-  font-family: var(--font-display);
-  font-size: 2.25rem;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-  background: linear-gradient(135deg, var(--copper-soft) 0%, var(--gold) 35%, var(--teal-soft) 70%, var(--copper) 100%);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: spectrumShift 6s ease-in-out infinite;
-  margin-bottom: 10px;
+.hero-title{
+  font-family:var(--font-ui);font-size:2rem;font-weight:600;
+  letter-spacing:-.03em;line-height:1.25;color:var(--text-primary);
+  margin-bottom:6px;
 }
 
-@keyframes spectrumShift {
-  0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
-}
-
-.hero-sub {
-  font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 300;
-  color: var(--text-muted);
-  max-width: 520px;
-  margin: 0 auto;
+.hero-sub{
+  font-size:14px;font-weight:400;color:var(--text-muted);
+  max-width:420px;margin:0 auto;line-height:1.5;
 }
 
 /* ═══════════════════════════════════════════════════════
-   Search — Pill-shaped Gemini-style input
+   Search — Gemini pill input (centered, floating)
    ═══════════════════════════════════════════════════════ */
-.search-section { margin-bottom: 28px; }
+.search-section{margin-bottom:20px;max-width:640px;margin-left:auto;margin-right:auto}
 
-/* ── Pill-shaped search ───────────────────────────────── */
-.ant-input-affix-wrapper {
-  border-radius: 28px !important;
-  padding: 6px 8px 6px 20px !important;
-  background: var(--bg-input) !important;
-  border: 1px solid var(--border-soft) !important;
-  backdrop-filter: blur(8px);
-  transition: all var(--ease-smooth) 300ms !important;
+/* ── Pill container ──────────────────────────────────── */
+.ant-input-affix-wrapper{
+  border-radius:var(--radius-pill) !important;
+  padding:7px 8px 7px 20px !important;
+  background:var(--bg-input) !important;
+  border:1px solid var(--border-subtle) !important;
+  transition:all var(--ease-gemini) .3s !important;
+  box-shadow:none !important;
 }
 
-.ant-input-affix-wrapper:focus-within,
-.ant-input-affix-wrapper:hover {
-  border-color: rgba(212,133,94,.35) !important;
-  box-shadow: 0 0 0 3px rgba(212,133,94,.08), 0 0 24px rgba(212,133,94,.06) !important;
-  background: rgba(20,30,46,.9) !important;
+.ant-input-affix-wrapper:focus-within{
+  border-color:rgba(180,160,220,.25) !important;
+  box-shadow:0 0 0 2px rgba(180,160,220,.06), 0 0 20px rgba(180,160,220,.04) !important;
+  background:#202025 !important;
 }
 
-.ant-input {
-  font-family: var(--font-body) !important;
-  font-size: 15px !important;
-  font-weight: 300 !important;
-  color: var(--text-primary) !important;
-  background: transparent !important;
+.ant-input-affix-wrapper:hover{
+  background:#1e1e22 !important;
+  border-color:#333340 !important;
 }
 
-.ant-input::placeholder {
-  color: var(--text-muted) !important;
-  font-weight: 300 !important;
+.ant-input{
+  font-family:var(--font-ui) !important;font-size:15px !important;
+  font-weight:400 !important;color:var(--text-primary) !important;
+  background:transparent !important;
+}
+.ant-input::placeholder{color:var(--text-muted) !important;font-weight:400 !important}
+
+/* ── Send button (pill right) ────────────────────────── */
+.ant-input-search .ant-input-group-addon .ant-btn{
+  border-radius:22px !important;padding:5px 18px !important;
+  font-weight:500 !important;font-family:var(--font-ui) !important;
+  font-size:13px !important;transition:all var(--ease-gemini) .2s !important;
 }
 
-/* ── Search button (pill right side) ──────────────────── */
-.ant-input-search .ant-input-group-addon .ant-btn {
-  border-radius: 22px !important;
-  padding: 4px 20px !important;
-  font-weight: 500 !important;
-  font-family: var(--font-display) !important;
-  font-size: 14px !important;
-  transition: all var(--ease-smooth) 250ms !important;
+.ant-input-search .ant-input-group-addon .ant-btn-primary{
+  background:#8ab4f8 !important;border:none !important;color:#000 !important;
+  box-shadow:none !important;
+}
+.ant-input-search .ant-input-group-addon .ant-btn-primary:hover{
+  background:#a0c4ff !important;box-shadow:0 0 16px rgba(138,180,248,.2) !important;
 }
 
-.ant-input-search .ant-input-group-addon .ant-btn-primary {
-  background: linear-gradient(135deg, var(--copper) 0%, #c97a52 100%) !important;
-  border: none !important;
-  box-shadow: 0 2px 12px rgba(212,133,94,.25);
+/* ── Filter selects — subtle, thin ───────────────────── */
+.ant-select .ant-select-selector{
+  border-radius:var(--radius-pill) !important;
+  background:var(--bg-input) !important;
+  border:1px solid var(--border-subtle) !important;
+  font-size:13px !important;font-weight:400 !important;
+  color:var(--text-secondary) !important;
 }
 
-.ant-input-search .ant-input-group-addon .ant-btn-primary:hover {
-  background: linear-gradient(135deg, #e0956e 0%, var(--copper) 100%) !important;
-  box-shadow: 0 4px 20px rgba(212,133,94,.4);
-  transform: translateY(-1px);
+/* ── Suggestion pills — centered, Gemini style ───────── */
+.ant-tag{
+  border-radius:var(--radius-pill) !important;
+  padding:5px 15px !important;font-weight:400 !important;
+  font-size:13px !important;font-family:var(--font-ui) !important;
+  transition:all var(--ease-gemini) .2s !important;
+  cursor:pointer !important;
+  background:var(--bg-card) !important;border:1px solid var(--border-subtle) !important;
+  color:var(--text-secondary) !important;
 }
-
-/* ── Filters (soft selects) ───────────────────────────── */
-.ant-select .ant-select-selector {
-  border-radius: 20px !important;
-  background: rgba(15,22,34,.7) !important;
-  border: 1px solid var(--border-soft) !important;
-  backdrop-filter: blur(6px);
-}
-
-/* ── Example tags (Gemini-style chips) ────────────────── */
-.ant-tag {
-  border-radius: 20px !important;
-  padding: 4px 14px !important;
-  font-weight: 400 !important;
-  font-size: 13px !important;
-  transition: all var(--ease-smooth) 200ms !important;
-  cursor: pointer !important;
-}
-
-.ant-tag:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+.ant-tag:hover{
+  background:var(--bg-hover) !important;border-color:#444450 !important;
+  color:var(--text-primary) !important;
 }
 
 /* ═══════════════════════════════════════════════════════
-   Cards — Glassmorphism with soft glow
+   Cards — Gemini response style: clean, minimal
    ═══════════════════════════════════════════════════════ */
-.ant-card {
-  border-radius: 16px !important;
-  background: var(--bg-glass) !important;
-  backdrop-filter: blur(12px) saturate(120%);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
-  border: 1px solid var(--border-glass) !important;
-  transition: all var(--ease-smooth) 300ms !important;
+.ant-card{
+  border-radius:var(--radius-card) !important;
+  background:var(--bg-card) !important;
+  border:1px solid var(--border-subtle) !important;
+  transition:all var(--ease-gemini) .25s !important;
+  box-shadow:none !important;
+}
+.ant-card:hover{
+  background:var(--bg-hover) !important;
+  border-color:#3a3a42 !important;
 }
 
-.ant-card:hover {
-  background: rgba(30,45,60,.75) !important;
-  border-color: rgba(255,255,255,.10) !important;
-  box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.04);
-  transform: translateY(-1px);
+/* ── Answer card (AI response) ───────────────────────── */
+.answer-card .ant-card{
+  background:var(--bg-card) !important;
+  border-color:var(--border-subtle) !important;
 }
+.answer-body{font-weight:400;line-height:1.75;font-size:14px;color:#d0d0d8}
+.answer-body strong,.answer-body b{font-weight:600;color:var(--text-primary)}
 
-/* ── Answer card special glow ─────────────────────────── */
-.answer-card .ant-card {
-  background: rgba(26,40,60,.6) !important;
-  border-color: rgba(212,133,94,.12) !important;
-  box-shadow: 0 0 32px rgba(212,133,94,.06);
-}
-
-.answer-card .ant-card:hover {
-  border-color: rgba(212,133,94,.2) !important;
-  box-shadow: 0 0 40px rgba(212,133,94,.10);
-}
-
-/* ── Progress ring ────────────────────────────────────── */
-.ant-progress .ant-progress-text {
-  font-family: var(--font-mono) !important;
-  font-weight: 500 !important;
-  font-size: 11px !important;
-}
-
-/* ── AI Answer paragraph ──────────────────────────────── */
-.answer-body {
-  font-weight: 300;
-  line-height: 1.85;
-  font-size: 15px;
-}
-
-/* ── Key info bold (Gemini emphasizes key info) ───────── */
-.answer-body strong,
-.answer-body b {
-  font-weight: 600;
-  color: var(--text-primary);
+/* ── Progress ring ───────────────────────────────────── */
+.ant-progress .ant-progress-text{
+  font-family:var(--font-mono) !important;font-weight:500 !important;
+  font-size:11px !important;color:var(--text-secondary) !important;
 }
 
 /* ═══════════════════════════════════════════════════════
-   Loading — Gemini-style pulsing orb
+   Loading — Gemini pulsating orb
    ═══════════════════════════════════════════════════════ */
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 40px 0;
+.loading-state{
+  display:flex;flex-direction:column;align-items:center;gap:14px;padding:60px 0;
 }
-
-/* Pulsing AI orb */
-.loading-orb {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--copper) 0%, var(--gold) 50%, var(--teal) 100%);
-  background-size: 200% 200%;
-  animation: orbPulse 2s ease-in-out infinite, spectrumShift 4s ease-in-out infinite;
-  box-shadow: 0 0 32px rgba(212,133,94,.25);
+.loading-orb{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg, #8ab4f8 0%, #c4a7f8 50%, #78c8b8 100%);
+  background-size:200% 200%;
+  animation:orbPulse 1.8s ease-in-out infinite, spectrumShift 4s ease-in-out infinite;
 }
-
-@keyframes orbPulse {
-  0%, 100% { transform: scale(1);   opacity: .8; }
-  50%      { transform: scale(1.12); opacity: 1; }
+@keyframes orbPulse{
+  0%,100%{transform:scale(1);opacity:.75}
+  50%{transform:scale(1.15);opacity:1}
 }
-
-/* Loading text */
-.loading-text {
-  font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--text-muted);
-  animation: fadeInOut 1.8s ease-in-out infinite;
+@keyframes spectrumShift{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
 }
-
-@keyframes fadeInOut {
-  0%, 100% { opacity: .4; }
-  50%      { opacity: .8; }
+.loading-text{
+  font-family:var(--font-ui);font-size:13px;font-weight:400;
+  color:var(--text-muted);animation:fadeInOut 2s ease-in-out infinite;
 }
+@keyframes fadeInOut{0%,100%{opacity:.4}50%{opacity:.8}}
 
 /* ═══════════════════════════════════════════════════════
-   Results — staggered card entrance (Gemini flow)
+   Results
    ═══════════════════════════════════════════════════════ */
-.results-section { margin-top: 16px; }
-
-.results-meta {
-  margin-bottom: 18px;
-  padding: 8px 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+.results-section{margin-top:12px}
+.results-meta{
+  margin-bottom:16px;padding:4px 0;display:flex;
+  align-items:center;gap:6px;flex-wrap:wrap;font-size:13px;
 }
 
-.results-meta strong {
-  font-family: var(--font-display);
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-/* Staggered card animation */
-@keyframes cardRise {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.result-card { animation: cardRise .5s var(--ease-gemini) both; }
-.result-card:nth-child(1) { animation-delay: .00s; }
-.result-card:nth-child(2) { animation-delay: .06s; }
-.result-card:nth-child(3) { animation-delay: .12s; }
-.result-card:nth-child(4) { animation-delay: .18s; }
-.result-card:nth-child(5) { animation-delay: .24s; }
+/* ── Card entrance ───────────────────────────────────── */
+@keyframes cardUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.result-card{animation:cardUp .4s var(--ease-gemini) both}
+.result-card:nth-child(1){animation-delay:.00s}
+.result-card:nth-child(2){animation-delay:.05s}
+.result-card:nth-child(3){animation-delay:.10s}
+.result-card:nth-child(4){animation-delay:.15s}
+.result-card:nth-child(5){animation-delay:.20s}
 
 /* ═══════════════════════════════════════════════════════
-   Error & Empty states
+   Error / Empty
    ═══════════════════════════════════════════════════════ */
-.error-banner {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 20px;
-  margin-bottom: 16px;
-  background: rgba(255,77,79,.07);
-  border: 1px solid rgba(255,77,79,.15);
-  border-radius: 16px;
-  color: #ff7875;
-  font-size: 14px;
-  font-weight: 300;
-  backdrop-filter: blur(8px);
+.error-banner{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 18px;margin-bottom:16px;
+  background:rgba(255,77,79,.08);border:1px solid rgba(255,77,79,.15);
+  border-radius:var(--radius-sm);color:#ff7875;font-size:13px;
 }
 
-.empty-state {
-  text-align: center;
-  padding: 100px 20px;
+.empty-state{text-align:center;padding:120px 20px}
+.empty-state .empty-icon{
+  width:48px;height:48px;margin:0 auto 20px;border-radius:50%;
+  background:var(--bg-card);border:1px solid var(--border-subtle);
+  display:flex;align-items:center;justify-content:center;opacity:.4;
 }
 
-.empty-state .empty-icon {
-  width: 56px; height: 56px;
-  margin: 0 auto 20px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.03);
-  border: 1px solid var(--border-glass);
-  display: flex; align-items: center; justify-content: center;
-  opacity: .5;
+/* ── Footer ──────────────────────────────────────────── */
+.app-footer{
+  text-align:center;padding:14px;border-top:1px solid var(--border-subtle);
+  font-family:var(--font-mono);font-size:11px;color:var(--text-muted);opacity:.5;
 }
 
-/* ═══════════════════════════════════════════════════════
-   Footer
-   ═══════════════════════════════════════════════════════ */
-.app-footer {
-  text-align: center;
-  padding: 16px;
-  border-top: 1px solid var(--border-glass);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--text-muted);
-  opacity: .6;
-}
+/* ── Layout overrides ────────────────────────────────── */
+.ant-layout-header{background:transparent !important;padding:12px 20px !important}
+.ant-layout-footer{background:transparent !important}
 
-/* ── Layout overrides ─────────────────────────────────── */
-.ant-layout-header { background: transparent !important; padding: 0 28px !important; }
-.ant-layout-footer { background: transparent !important; }
-
-/* ── Scrollbar ────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.14); }
+/* ── Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.12)}
