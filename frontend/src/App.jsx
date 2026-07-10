@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ConfigProvider, Layout, theme, Typography } from "antd";
-import { DatabaseOutlined } from "@ant-design/icons";
+import { FundOutlined } from "@ant-design/icons";
 import SearchBar from "./components/SearchBar";
 import AnswerCard from "./components/AnswerCard";
 import ResultCard from "./components/ResultCard";
@@ -25,19 +25,23 @@ export default function App() {
       theme={{
         algorithm: theme.darkAlgorithm,
         token: {
-          colorPrimary: "#1677ff",
+          colorPrimary: "#d4855e",
           borderRadius: 8,
-          colorBgContainer: "#161a2c",
-          colorBgElevated: "#1e2340",
-          colorBorder: "#2a2f4a",
+          colorBgContainer: "#141c2e",
+          colorBgElevated: "#1a2440",
+          colorBorder: "#1a2a44",
+          colorText: "#e8ecf4",
+          colorTextSecondary: "#8899bb",
+          fontFamily: "'Space Grotesk', 'Noto Sans SC', sans-serif",
+          fontSize: 15,
         },
       }}
     >
       <Layout className="app-layout">
         <Header className="app-header">
           <div className="header-left">
-            <DatabaseOutlined style={{ fontSize: 22, color: "#1677ff" }} />
-            <Title level={4} style={{ margin: 0, color: "#fff" }}>
+            <FundOutlined style={{ fontSize: 22, color: "#d4855e" }} />
+            <Title level={4} style={{ margin: 0, color: "#e8ecf4", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, letterSpacing: "-0.02em" }}>
               Mining Intelligence
             </Title>
           </div>
@@ -46,7 +50,7 @@ export default function App() {
 
         <Content className="app-content">
           <div className="hero">
-            <Title level={2} style={{ color: "#fff", marginBottom: 8 }}>
+            <Title level={2}>
               News · Policy · Prices
             </Title>
             <Text type="secondary" style={{ fontSize: 15 }}>
@@ -75,7 +79,7 @@ export default function App() {
           {result && !loading && (
             <div className="results-section">
               <div className="results-meta">
-                <Text strong style={{ color: "#fff" }}>
+                <Text strong style={{ color: "#e8ecf4" }}>
                   &ldquo;{lastQuestion}&rdquo;
                 </Text>
                 <Text type="secondary">
@@ -84,11 +88,15 @@ export default function App() {
                 </Text>
               </div>
 
-              <AnswerCard answer={result.answer} />
+              <div className="answer-card">
+                <AnswerCard answer={result.answer} />
+              </div>
 
               <div className="results-list">
                 {result.retrieved_docs.map((doc, i) => (
-                  <ResultCard key={doc.id} doc={doc} index={i} />
+                  <div key={doc.id} className="result-card">
+                    <ResultCard doc={doc} index={i} />
+                  </div>
                 ))}
               </div>
             </div>

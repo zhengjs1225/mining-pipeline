@@ -1,0 +1,106 @@
+/* ═══════════════════════════════════════════════════════════
+   Mining Terminal — Design Tokens
+   Industrial mining aesthetic with geological undertones
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Raw color tokens ─────────────────────────────────── */
+:root {
+  /* Core palette */
+  --raw-slate-900: #0a0e17;
+  --raw-slate-850: #0f1624;
+  --raw-slate-800: #141c2e;
+  --raw-slate-700: #1c2740;
+  --raw-slate-600: #263354;
+  --raw-slate-400: #4a5e8a;
+
+  /* Metallic accents (mining metals) */
+  --raw-copper:  #d4855e;
+  --raw-nickel:  #8a9bad;
+  --raw-zinc:    #a0b4c8;
+  --raw-gold:    #c9a85c;
+  --raw-lithium: #7eb8c9;
+
+  /* Accent colors in oklch */
+  --raw-accent-blue:    #3b82f6;
+  --raw-accent-cyan:    #22d3ee;
+  --raw-accent-amber:   #f59e0b;
+  --raw-accent-emerald: #10b981;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-body:    'IBM Plex Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --font-cjk:     'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* Type scale (minor third: 1.2) */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.2rem;
+  --text-xl:   1.44rem;
+  --text-2xl:  1.728rem;
+  --text-3xl:  2.074rem;
+  --text-4xl:  2.488rem;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 600ms;
+}
+
+/* ── Semantic tokens ──────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --bg-deep:      var(--raw-slate-900);
+  --bg-primary:   var(--raw-slate-850);
+  --bg-elevated:  var(--raw-slate-800);
+  --bg-surface:   var(--raw-slate-700);
+  --bg-hover:     var(--raw-slate-600);
+
+  /* Foreground */
+  --fg-primary:   #e8ecf4;
+  --fg-secondary: #8899bb;
+  --fg-muted:     #556688;
+  --fg-inverse:   var(--raw-slate-900);
+
+  /* Borders */
+  --border-subtle:  #1e3050;
+  --border-default: #2a4070;
+  --border-strong:  #3a5590;
+
+  /* Accent roles */
+  --accent-primary:  var(--raw-copper);
+  --accent-secondary: var(--raw-nickel);
+  --accent-tertiary:  var(--raw-lithium);
+
+  /* Semantic */
+  --text-heading:  var(--fg-primary);
+  --text-body:     var(--fg-secondary);
+  --text-caption:  var(--fg-muted);
+  --text-link:     var(--raw-copper);
+  --text-accent:   var(--raw-gold);
+
+  /* Categories */
+  --cat-news:   var(--raw-gold);
+  --cat-policy: var(--raw-accent-blue);
+  --cat-price:  var(--raw-accent-emerald);
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,.4), 0 1px 2px rgba(0,0,0,.24);
+  --shadow-elevated: 0 4px 16px rgba(0,0,0,.48), 0 1px 4px rgba(0,0,0,.32);
+  --shadow-glow-copper: 0 0 20px rgba(212,133,94,.15);
+}
