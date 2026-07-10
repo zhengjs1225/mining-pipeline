@@ -1,8 +1,9 @@
 import { useState, useMemo } from "react";
-import { ConfigProvider, Layout, theme, Typography } from "antd";
-import { SettingOutlined } from "@ant-design/icons";
+import { ConfigProvider, Layout, theme, Typography, Drawer } from "antd";
+import { SettingOutlined, ScheduleOutlined } from "@ant-design/icons";
 import ThemeToggle from "./components/ThemeToggle";
 import SettingsDrawer from "./components/SettingsDrawer";
+import ScheduleManager from "./components/ScheduleManager";
 import SearchBar from "./components/SearchBar";
 import AnswerCard from "./components/AnswerCard";
 import ResultCard from "./components/ResultCard";
@@ -17,6 +18,7 @@ export default function App() {
   const { loading, result, error, run } = useQuery();
   const [lastQuestion, setLastQuestion] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [schedulesOpen, setSchedulesOpen] = useState(false);
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem("theme");
     return saved !== "light";
@@ -72,6 +74,13 @@ export default function App() {
               </svg>
             </div>
             <span className="brand-name">Mining Intelligence</span>
+            <button
+              className="nav-btn"
+              onClick={() => setSchedulesOpen(true)}
+              title="Scheduled Tasks"
+            >
+              <ScheduleOutlined /> Schedules
+            </button>
           </div>
           <div className="header-right">
             <StatsBar />
@@ -89,6 +98,18 @@ export default function App() {
           isDark={isDark}
           onToggleTheme={toggleTheme}
         />
+
+        {/* ── Schedules Drawer (left) ── */}
+        <Drawer
+          title={null}
+          placement="left"
+          width={480}
+          open={schedulesOpen}
+          onClose={() => setSchedulesOpen(false)}
+          styles={{ body: { padding: "12px 20px" }, header: { display: "none" } }}
+        >
+          <ScheduleManager embedded />
+        </Drawer>
 
         {/* ── Main Content ── */}
         <Content className="app-content">

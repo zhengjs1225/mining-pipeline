@@ -133,6 +133,19 @@ body.loading::before{
   box-shadow:var(--shadow-xs);
 }
 .brand-name{font-weight:600;font-size:0.9375rem;color:var(--foreground);letter-spacing:-.01em}
+
+/* ── Nav button (e.g. Schedules) ─────────────────────── */
+.nav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:var(--radius-lg);
+  border:1px solid var(--border);background:transparent;
+  color:var(--foreground);cursor:pointer;
+  font-family:'Manrope','Noto Sans SC',sans-serif;
+  font-size:0.8125rem;font-weight:500;
+  transition:all .15s ease;margin-left:6px;
+}
+.nav-btn:hover{background:var(--accent);color:var(--accent-foreground);border-color:var(--ring)}
+.nav-btn:active{transform:scale(.97)}
 .header-right{display:flex;align-items:center;gap:10px}
 
 /* ── Theme toggle — shadcn outline button style ───────── */

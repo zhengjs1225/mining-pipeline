@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import {
-  Drawer, Tabs, Form, Input, Select, Switch, Button,
+  Drawer, Form, Input, Select, Switch, Button,
   Space, Typography, Divider, message
 } from "antd";
 import {
-  ApiOutlined, ScheduleOutlined, BulbOutlined,
+  SettingOutlined, BulbOutlined,
   KeyOutlined, LinkOutlined, RobotOutlined
 } from "@ant-design/icons";
-import ScheduleManager from "./ScheduleManager";
 
 const { Text, Title } = Typography;
 
@@ -44,26 +43,17 @@ export default function SettingsDrawer({ open, onClose, isDark, onToggleTheme })
 
   return (
     <Drawer
-      title={null}
+      title={<span><SettingOutlined /> Settings</span>}
       placement="right"
-      width={480}
+      width={420}
       open={open}
       onClose={onClose}
-      styles={{ body: { padding: 0 }, header: { display: "none" } }}
+      styles={{ body: { padding: "8px 20px 20px" } }}
     >
-      <Tabs
-        defaultActiveKey="general"
-        tabBarStyle={{ padding: "0 20px", marginBottom: 0 }}
-        items={[
-          {
-            key: "general",
-            label: <span><ApiOutlined /> General</span>,
-            children: (
-              <div style={{ padding: "8px 20px 20px" }}>
-                <Title level={5} style={{ marginBottom: 16 }}>LLM Configuration</Title>
-                <Text type="secondary" style={{ fontSize: 13, display: "block", marginBottom: 16 }}>
-                  Configure the AI model for answer generation. Changes take effect on server restart.
-                </Text>
+      <Title level={5} style={{ marginBottom: 16 }}>LLM Configuration</Title>
+      <Text type="secondary" style={{ fontSize: 13, display: "block", marginBottom: 16 }}>
+        Configure the AI model for answer generation.
+      </Text>
 
                 <Form layout="vertical" size="middle">
                   <Form.Item label={<span><KeyOutlined /> API Key</span>}>
@@ -128,20 +118,6 @@ export default function SettingsDrawer({ open, onClose, isDark, onToggleTheme })
                   </Space>
                   <Switch checked={isDark} onChange={onToggleTheme} />
                 </div>
-              </div>
-            ),
-          },
-          {
-            key: "schedules",
-            label: <span><ScheduleOutlined /> Schedules</span>,
-            children: (
-              <div style={{ padding: "0 20px" }}>
-                <ScheduleManager embedded />
-              </div>
-            ),
-          },
-        ]}
-      />
-    </Drawer>
+      </Drawer>
   );
 }
