@@ -6,6 +6,26 @@
 
 ---
 
+## 📸 Demo
+
+### Homepage
+
+![Mining Intelligence Homepage](demo/demo_homepage.png)
+
+### English Query — "What are the latest copper mining developments?"
+
+![Query Results](demo/demo_query_results.png)
+
+### Chinese Query — "中国稀土出口管制政策最新动态"
+
+![Chinese Query](demo/demo_chinese_query.png)
+
+### Health API
+
+![Health API](demo/demo_health_api.png)
+
+---
+
 ## ✨ What It Does
 
 Ask natural language questions about the global mining industry — in English or Chinese — and get AI-generated answers backed by real data from 7 authoritative sources.
