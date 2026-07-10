@@ -1,0 +1,27 @@
+# Render Blueprint — auto-deploy from GitHub
+# 1. Go to https://dashboard.render.com
+# 2. Click "New" → "Blueprint"
+# 3. Connect your GitHub repo: zhengjs1225/mining-pipeline
+# 4. Render reads this file and auto-deploys
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: mining-pipeline
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: SERVE_STATIC
+        value: "true"
+      - key: FRONTEND_DIR
+        value: "/app/frontend/dist"
+      - key: LLM_API_KEY
+        sync: false
+      - key: LLM_BASE_URL
+        value: "https://api.deepseek.com/v1"
+      - key: LLM_MODEL
+        value: "deepseek-chat"
