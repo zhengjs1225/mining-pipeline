@@ -1,0 +1,31 @@
+# Environment — contains API keys
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Data stores (generated at runtime)
+data/lightweight_store/
+data/chroma/
+data/sample_output.json
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
