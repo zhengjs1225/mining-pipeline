@@ -1,6 +1,6 @@
 # 🏔️ 矿枢 MinerPivot
 
-> AI-powered semantic search over global mining news, critical mineral policy, and commodity prices — built for the modern mining analyst.
+> 三源聚合 · 数据枢纽 · 产业核心 — 新闻 / 政策 / 价格汇聚中心
 
 **🔗 Live Demo:** [https://concerned-pharmacy-mine-asia.trycloudflare.com](https://concerned-pharmacy-mine-asia.trycloudflare.com)
 
@@ -8,21 +8,23 @@
 
 ## 📸 Demo
 
-### Homepage
+### Dark Mode
 
-![矿枢 MinerPivot Homepage](demo/demo_homepage.png)
+| Homepage | Query Results |
+|----------|--------------|
+| ![Dark Homepage](demo/demo_homepage.png) | ![Dark Query](demo/demo_query_results.png) |
 
-### English Query — "What are the latest copper mining developments?"
+### Light Mode
 
-![Query Results](demo/demo_query_results.png)
+| Homepage | Query Results |
+|----------|--------------|
+| ![Light Homepage](demo/demo_light_homepage.png) | ![Light Query](demo/demo_light_query.png) |
 
-### Chinese Query — "中国稀土出口管制政策最新动态"
+### Features
 
-![Chinese Query](demo/demo_chinese_query.png)
-
-### Health API
-
-![Health API](demo/demo_health_api.png)
+| Schedules | Settings |
+|-----------|----------|
+| ![Schedules](demo/demo_schedules.png) | ![Settings](demo/demo_settings.png) |
 
 ---
 
