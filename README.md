@@ -2,7 +2,7 @@
 
 > AI-powered semantic search over global mining news, critical mineral policy, and commodity prices — built for the modern mining analyst.
 
-**🔗 Live Demo:** [https://shows-instance-admissions-active.trycloudflare.com](https://shows-instance-admissions-active.trycloudflare.com)
+**🔗 Live Demo:** [https://concerned-pharmacy-mine-asia.trycloudflare.com](https://concerned-pharmacy-mine-asia.trycloudflare.com)
 
 ---
 
