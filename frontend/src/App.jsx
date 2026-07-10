@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ConfigProvider, Layout, theme, Typography } from "antd";
+import ThemeToggle from "./components/ThemeToggle";
 import SearchBar from "./components/SearchBar";
 import AnswerCard from "./components/AnswerCard";
 import ResultCard from "./components/ResultCard";
@@ -13,37 +14,52 @@ const { Text } = Typography;
 export default function App() {
   const { loading, result, error, run } = useQuery();
   const [lastQuestion, setLastQuestion] = useState("");
+  const [isDark, setIsDark] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    return saved !== "light";
+  });
 
   const handleSearch = (params) => {
     setLastQuestion(params.question);
     run(params);
   };
 
-  // Add loading class to body for Gemini-style intensified gradient
+  const toggleTheme = () => {
+    setIsDark((prev) => {
+      const next = !prev;
+      localStorage.setItem("theme", next ? "dark" : "light");
+      return next;
+    });
+  };
+
+  // Apply theme to <html> for CSS variable switching + loading state
   if (typeof document !== "undefined") {
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
     document.body.className = loading ? "loading" : "";
   }
 
+  const antTheme = useMemo(
+    () => ({
+      algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+      token: {
+        colorPrimary: isDark ? "#8ab4f8" : "#4a7cf7",
+        borderRadius: 20,
+        colorBgContainer: isDark ? "#1a1a1e" : "#ffffff",
+        colorBgElevated: isDark ? "#222228" : "#f8f8fa",
+        colorBorder: isDark ? "#2a2a30" : "#e0e0e4",
+        colorText: isDark ? "#f1f1f3" : "#1a1a1e",
+        colorTextSecondary: isDark ? "#9a9aa0" : "#5a5a62",
+        fontFamily: "'Manrope', 'Noto Sans SC', sans-serif",
+        fontSize: 14,
+        paddingLG: 18,
+      },
+    }),
+    [isDark]
+  );
+
   return (
-    <ConfigProvider
-      theme={{
-        algorithm: theme.darkAlgorithm,
-        token: {
-          colorPrimary: "#8ab4f8",
-          borderRadius: 20,
-          colorBgContainer: "#1a1a1e",
-          colorBgElevated: "#222228",
-          colorBorder: "#2a2a30",
-          colorText: "#f1f1f3",
-          colorTextSecondary: "#9a9aa0",
-          fontFamily: "'Manrope', 'Noto Sans SC', sans-serif",
-          fontSize: 14,
-          paddingLG: 18,
-        },
-      }}
-    >
+    <ConfigProvider theme={antTheme}>
       <Layout className="app-layout">
-        {/* Header: Gemini-style ultra minimal */}
         <Header className="app-header">
           <div className="header-left">
             <div className="app-logo">
@@ -54,11 +70,13 @@ export default function App() {
             </div>
             <span className="brand-name">Mining Intelligence</span>
           </div>
-          <StatsBar />
+          <div className="header-right">
+            <StatsBar />
+            <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
+          </div>
         </Header>
 
         <Content className="app-content">
-          {/* Hero: Centered, large, welcoming */}
           <div className="hero">
             <h2 className="hero-title">News · Policy · Prices</h2>
             <p className="hero-sub">
@@ -67,17 +85,14 @@ export default function App() {
             </p>
           </div>
 
-          {/* Search */}
           <SearchBar onSearch={handleSearch} loading={loading} />
 
-          {/* Error */}
           {error && (
             <div className="error-banner">
               <span>{error}</span>
             </div>
           )}
 
-          {/* Loading: Gemini pulsating orb */}
           {loading && (
             <div className="loading-state">
               <div className="loading-orb" />
@@ -85,22 +100,17 @@ export default function App() {
             </div>
           )}
 
-          {/* Results */}
           {result && !loading && (
             <div className="results-section">
               <div className="results-meta">
-                <Text strong style={{ color: "#f1f1f3" }}>
-                  &ldquo;{lastQuestion}&rdquo;
-                </Text>
+                <Text strong>&ldquo;{lastQuestion}&rdquo;</Text>
                 <Text type="secondary">
                   · {result.retrieved_docs.length} docs · {result.query_time_ms}ms
                 </Text>
               </div>
-
               <div className="answer-card">
                 <AnswerCard answer={result.answer} />
               </div>
-
               <div className="results-list">
                 {result.retrieved_docs.map((doc, i) => (
                   <div key={doc.id} className="result-card">
@@ -111,7 +121,6 @@ export default function App() {
             </div>
           )}
 
-          {/* Empty */}
           {!result && !loading && !error && (
             <div className="empty-state">
               <div className="empty-icon">

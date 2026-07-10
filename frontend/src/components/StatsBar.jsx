@@ -1,27 +1,19 @@
 import { useState, useEffect } from "react";
 import { Space, Tag, Badge, Typography } from "antd";
-import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 import * as api from "../lib/api";
 
 const { Text } = Typography;
 
-const CATEGORY_COLORS = { news: "#fa8c16", policy: "#1677ff", price: "#52c41a" };
+const CATEGORY_COLORS = { news: "#d4855e", policy: "#5599dd", price: "#4dbd8a" };
 
 export default function StatsBar() {
   const [stats, setStats] = useState(null);
   const [error, setError] = useState(false);
 
   const fetch = () => {
-    api
-      .healthCheck()
-      .then((data) => {
-        setStats(data);
-        setError(false);
-      })
+    api.healthCheck()
+      .then((data) => { setStats(data); setError(false); })
       .catch(() => setError(true));
   };
 
@@ -36,7 +28,7 @@ export default function StatsBar() {
       <Space size={6}>
         <Badge status="error" />
         <Text type="danger" style={{ fontSize: 13 }}>API Offline</Text>
-        <ReloadOutlined style={{ color: "#ff4d4f", cursor: "pointer" }} onClick={fetch} />
+        <ReloadOutlined style={{ cursor: "pointer" }} onClick={fetch} />
       </Space>
     );
   }
@@ -44,21 +36,16 @@ export default function StatsBar() {
   const { total_documents, by_category } = stats;
 
   return (
-    <Space size={12} wrap>
+    <Space size={10} wrap>
       <Space size={4}>
         <Badge status="success" />
-        <Text style={{ color: "#a0a8c0", fontSize: 13 }}>
+        <Text type="secondary" style={{ fontSize: 13 }}>
           {total_documents?.toLocaleString()} docs
         </Text>
       </Space>
-
       {by_category &&
         Object.entries(by_category).map(([cat, count]) => (
-          <Tag
-            key={cat}
-            color={CATEGORY_COLORS[cat] || "#8c8c8c"}
-            style={{ margin: 0, fontSize: 12 }}
-          >
+          <Tag key={cat} color={CATEGORY_COLORS[cat] || "#8c8c8c"} style={{ margin: 0, fontSize: 12 }}>
             {cat} {count}
           </Tag>
         ))}
