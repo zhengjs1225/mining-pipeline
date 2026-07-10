@@ -17,10 +17,13 @@ Query example:
 
 import json
 import os
+from pathlib import Path
 from typing import List, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from loguru import logger
 from pydantic import BaseModel, Field
 
@@ -326,6 +329,28 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
     logger.info("Mining Intelligence API shutting down...")
+
+
+# ── Serve frontend static files in production ─────────────
+FRONTEND_DIR = os.getenv("FRONTEND_DIR", "")
+SERVE_STATIC = os.getenv("SERVE_STATIC", "").lower() == "true"
+
+if SERVE_STATIC and FRONTEND_DIR and Path(FRONTEND_DIR).exists():
+    # Mount static assets (JS, CSS, images)
+    assets_dir = Path(FRONTEND_DIR) / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
+
+    # Serve public files and SPA fallback
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        """Serve frontend SPA — fallback to index.html."""
+        file_path = Path(FRONTEND_DIR) / full_path
+        if full_path and file_path.exists() and file_path.is_file():
+            return FileResponse(str(file_path))
+        return FileResponse(str(Path(FRONTEND_DIR) / "index.html"))
+
+    logger.info(f"Serving frontend static files from {FRONTEND_DIR}")
 
 
 # ── Entry point ──────────────────────────────────────────

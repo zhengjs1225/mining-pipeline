@@ -1,4 +1,4 @@
-const BASE = "http://localhost:8000";
+const BASE = import.meta.env.PROD ? "" : "http://localhost:8000";
 
 export async function healthCheck() {
   const res = await fetch(`${BASE}/health`);
