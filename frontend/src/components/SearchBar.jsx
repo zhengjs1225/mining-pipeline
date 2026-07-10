@@ -1,21 +1,23 @@
 import { useState } from "react";
+import { Input, Select, Button, Space, Tag } from "antd";
+import { SearchOutlined, LoadingOutlined } from "@ant-design/icons";
 
 const SOURCES = [
-  { key: "", label: "All Sources" },
-  { key: "mining_com", label: "Mining.com" },
-  { key: "sp_global_mining", label: "S&P Global" },
-  { key: "rare_earth_cn", label: "中国稀土" },
-  { key: "disr_au", label: "Australia DISR" },
-  { key: "lme", label: "LME" },
-  { key: "shfe", label: "SHFE" },
-  { key: "steel_union", label: "上海钢联" },
+  { value: "", label: "All Sources" },
+  { value: "mining_com", label: "Mining.com" },
+  { value: "sp_global_mining", label: "S&P Global" },
+  { value: "rare_earth_cn", label: "中国稀土" },
+  { value: "disr_au", label: "Australia DISR" },
+  { value: "lme", label: "LME" },
+  { value: "shfe", label: "SHFE" },
+  { value: "steel_union", label: "上海钢联" },
 ];
 
 const CATEGORIES = [
-  { key: "", label: "All" },
-  { key: "news", label: "News" },
-  { key: "policy", label: "Policy" },
-  { key: "price", label: "Price" },
+  { value: "", label: "All Categories" },
+  { value: "news", label: "News" },
+  { value: "policy", label: "Policy" },
+  { value: "price", label: "Price" },
 ];
 
 const EXAMPLES = [
@@ -32,69 +34,88 @@ export default function SearchBar({ onSearch, loading }) {
   const [category, setCategory] = useState("");
   const [topK, setTopK] = useState(5);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSearch = () => {
     if (!question.trim()) return;
-    onSearch({ question: question.trim(), topK, sourceFilter: source, categoryFilter: category });
+    onSearch({
+      question: question.trim(),
+      topK,
+      sourceFilter: source || null,
+      categoryFilter: category || null,
+    });
   };
 
   const handleExample = (q) => {
     setQuestion(q);
-    onSearch({ question: q, topK, sourceFilter: source, categoryFilter: category });
+    onSearch({
+      question: q,
+      topK,
+      sourceFilter: source || null,
+      categoryFilter: category || null,
+    });
   };
 
   return (
     <div className="search-section">
-      <form onSubmit={handleSubmit} className="search-form">
-        <div className="search-input-row">
-          <input
-            type="text"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Ask anything about mining — news, policy, or prices..."
-            className="search-input"
-            autoFocus
+      <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+        <Input.Search
+          size="large"
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          onSearch={handleSearch}
+          placeholder="Ask anything about mining — news, policy, or prices..."
+          enterButton={
+            <Button type="primary" loading={loading} icon={loading ? undefined : <SearchOutlined />}>
+              {loading ? "Searching" : "Search"}
+            </Button>
+          }
+          disabled={loading}
+          autoFocus
+        />
+
+        <Space wrap>
+          <Select
+            value={source || undefined}
+            onChange={setSource}
+            options={SOURCES}
+            style={{ width: 160 }}
+            placeholder="Source"
+            allowClear
+            onClear={() => setSource("")}
           />
-          <button type="submit" disabled={loading || !question.trim()} className="search-btn">
-            {loading ? (
-              <span className="spinner" />
-            ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.35-4.35" />
-              </svg>
-            )}
-          </button>
-        </div>
+          <Select
+            value={category || undefined}
+            onChange={setCategory}
+            options={CATEGORIES}
+            style={{ width: 150 }}
+            placeholder="Category"
+            allowClear
+            onClear={() => setCategory("")}
+          />
+          <Select
+            value={topK}
+            onChange={setTopK}
+            options={[
+              { value: 3, label: "Top 3" },
+              { value: 5, label: "Top 5" },
+              { value: 10, label: "Top 10" },
+            ]}
+            style={{ width: 100 }}
+          />
+        </Space>
 
-        <div className="filter-row">
-          <select value={source} onChange={(e) => setSource(e.target.value)} className="filter-select">
-            {SOURCES.map((s) => (
-              <option key={s.key} value={s.key}>{s.label}</option>
-            ))}
-          </select>
-
-          <select value={category} onChange={(e) => setCategory(e.target.value)} className="filter-select">
-            {CATEGORIES.map((c) => (
-              <option key={c.key} value={c.key}>{c.label}</option>
-            ))}
-          </select>
-
-          <select value={topK} onChange={(e) => setTopK(Number(e.target.value))} className="filter-select k-select">
-            <option value={3}>Top 3</option>
-            <option value={5}>Top 5</option>
-            <option value={10}>Top 10</option>
-          </select>
-        </div>
-      </form>
-
-      <div className="examples-row">
-        {EXAMPLES.map((q) => (
-          <button key={q} onClick={() => handleExample(q)} className="example-chip">
-            {q}
-          </button>
-        ))}
-      </div>
+        <Space wrap size={[4, 4]}>
+          {EXAMPLES.map((q) => (
+            <Tag
+              key={q}
+              color="blue"
+              style={{ cursor: "pointer", padding: "4px 10px", fontSize: 13 }}
+              onClick={() => handleExample(q)}
+            >
+              {q}
+            </Tag>
+          ))}
+        </Space>
+      </Space>
     </div>
   );
 }
