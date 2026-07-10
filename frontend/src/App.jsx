@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
-import { ConfigProvider, Layout, theme, Typography } from "antd";
+import { ConfigProvider, Layout, theme, Typography, Drawer, Button } from "antd";
+import { ScheduleOutlined } from "@ant-design/icons";
 import ThemeToggle from "./components/ThemeToggle";
 import SearchBar from "./components/SearchBar";
 import AnswerCard from "./components/AnswerCard";
@@ -15,6 +16,7 @@ const { Text } = Typography;
 export default function App() {
   const { loading, result, error, run } = useQuery();
   const [lastQuestion, setLastQuestion] = useState("");
+  const [scheduleOpen, setScheduleOpen] = useState(false);
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem("theme");
     return saved !== "light";
@@ -33,7 +35,6 @@ export default function App() {
     });
   };
 
-  // Apply theme to <html> for CSS variable switching + loading state
   if (typeof document !== "undefined") {
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
     document.body.className = loading ? "loading" : "";
@@ -61,6 +62,7 @@ export default function App() {
   return (
     <ConfigProvider theme={antTheme}>
       <Layout className="app-layout">
+        {/* ── Header ── */}
         <Header className="app-header">
           <div className="header-left">
             <div className="app-logo">
@@ -70,6 +72,15 @@ export default function App() {
               </svg>
             </div>
             <span className="brand-name">Mining Intelligence</span>
+            <Button
+              type="text"
+              size="small"
+              icon={<ScheduleOutlined />}
+              onClick={() => setScheduleOpen(true)}
+              style={{ marginLeft: 8, fontWeight: 500, fontSize: 13 }}
+            >
+              Schedules
+            </Button>
           </div>
           <div className="header-right">
             <StatsBar />
@@ -77,6 +88,22 @@ export default function App() {
           </div>
         </Header>
 
+        {/* ── Schedules Drawer (left side) ── */}
+        <Drawer
+          title={null}
+          placement="left"
+          width={480}
+          open={scheduleOpen}
+          onClose={() => setScheduleOpen(false)}
+          styles={{
+            body: { padding: "12px 20px" },
+            header: { display: "none" },
+          }}
+        >
+          <ScheduleManager embedded />
+        </Drawer>
+
+        {/* ── Main Content ── */}
         <Content className="app-content">
           <div className="hero">
             <h2 className="hero-title">News · Policy · Prices</h2>
@@ -135,9 +162,6 @@ export default function App() {
             </div>
           )}
         </Content>
-
-        {/* ── Schedule Manager ── */}
-        <ScheduleManager />
 
         <Footer className="app-footer">
           Mining Intelligence Pipeline · 7 sources · news / policy / price

@@ -43,7 +43,7 @@ function CronPreview({ cron }) {
   return <Text type="secondary" style={{ fontSize: 12 }}>{times.join(" · ")}</Text>;
 }
 
-export default function ScheduleManager() {
+export default function ScheduleManager({ embedded = false }) {
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(null); // null | 'new' | scheduleId
@@ -107,14 +107,14 @@ export default function ScheduleManager() {
   };
 
   return (
-    <div style={{ marginTop: 32 }}>
+    <div style={{ marginTop: embedded ? 0 : 32 }}>
       {contextHolder}
 
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
         <Space>
           <ScheduleOutlined style={{ fontSize: 18 }} />
           <Title level={5} style={{ margin: 0 }}>Scheduled Tasks</Title>
-          <Tag>{schedules.length} active</Tag>
+          <Tag color="blue">{schedules.filter(s=>s.enabled).length}/{schedules.length} active</Tag>
         </Space>
         <Space>
           <Button icon={<ReloadOutlined />} size="small" onClick={fetchSchedules} loading={loading} />
