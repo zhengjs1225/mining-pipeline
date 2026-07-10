@@ -24,3 +24,38 @@ export async function query({ question, topK = 5, generateAnswer = true, sourceF
   }
   return res.json();
 }
+
+// ── Schedule API ────────────────────────────────────────
+export async function listSchedules() {
+  const res = await fetch(`${BASE}/schedules`);
+  if (!res.ok) throw new Error("Failed to list schedules");
+  return res.json();
+}
+
+export async function createSchedule(data) {
+  const res = await fetch(`${BASE}/schedules`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Failed to create schedule");
+  return res.json();
+}
+
+export async function updateSchedule(id, data) {
+  const res = await fetch(`${BASE}/schedules/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Failed to update schedule");
+  return res.json();
+}
+
+export async function deleteSchedule(id) {
+  const res = await fetch(`${BASE}/schedules/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Failed to delete schedule");
+  return res.json();
+}

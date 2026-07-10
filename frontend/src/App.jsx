@@ -4,6 +4,7 @@ import ThemeToggle from "./components/ThemeToggle";
 import SearchBar from "./components/SearchBar";
 import AnswerCard from "./components/AnswerCard";
 import ResultCard from "./components/ResultCard";
+import ScheduleManager from "./components/ScheduleManager";
 import StatsBar from "./components/StatsBar";
 import { useQuery } from "./hooks/useQuery";
 import "./App.css";
@@ -134,6 +135,9 @@ export default function App() {
             </div>
           )}
         </Content>
+
+        {/* ── Schedule Manager ── */}
+        <ScheduleManager />
 
         <Footer className="app-footer">
           Mining Intelligence Pipeline · 7 sources · news / policy / price

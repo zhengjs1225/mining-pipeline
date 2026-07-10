@@ -318,17 +318,149 @@ async def _generate_answer(
 
 @app.on_event("startup")
 async def startup():
+    global _scheduler
     logger.info("Mining Intelligence API starting up...")
     # Pre-load embedder
     get_embedder()
     store = get_vector_store()
     stats = store.get_stats()
     logger.info(f"Vector store ready: {stats['total']} documents")
+    # Start scheduler
+    _scheduler = ScheduleRunner(_scheduled_query, _scheduled_push, interval=60)
+    _scheduler.start()
 
 
 @app.on_event("shutdown")
 async def shutdown():
+    global _scheduler
+    if _scheduler:
+        _scheduler.stop()
     logger.info("Mining Intelligence API shutting down...")
+
+
+# ── Schedule CRUD ──────────────────────────────────────────
+from serve.scheduler import (
+    list_schedules, get_schedule, create_schedule,
+    update_schedule, delete_schedule, ScheduleRunner,
+)
+
+
+class ScheduleRequest(BaseModel):
+    question: str = Field(..., description="Query to run on schedule")
+    cron: str = Field("0 9 * * *", description="Cron expression (min hour dom mon dow)")
+    top_k: int = Field(3, ge=1, le=10)
+    source_filter: Optional[str] = None
+    category_filter: Optional[str] = None
+    enabled: bool = True
+
+
+class ScheduleUpdateRequest(BaseModel):
+    question: Optional[str] = None
+    cron: Optional[str] = None
+    top_k: Optional[int] = None
+    source_filter: Optional[str] = None
+    category_filter: Optional[str] = None
+    enabled: Optional[bool] = None
+
+
+@app.get("/schedules")
+async def get_schedules():
+    """List all scheduled tasks."""
+    return list_schedules()
+
+
+@app.post("/schedules")
+async def create_schedule_endpoint(req: ScheduleRequest):
+    """Create a new scheduled query."""
+    return create_schedule(req.model_dump())
+
+
+@app.put("/schedules/{schedule_id}")
+async def update_schedule_endpoint(schedule_id: str, req: ScheduleUpdateRequest):
+    """Update an existing schedule."""
+    result = update_schedule(schedule_id, req.model_dump(exclude_none=True))
+    if result is None:
+        raise HTTPException(status_code=404, detail="Schedule not found")
+    return result
+
+
+@app.delete("/schedules/{schedule_id}")
+async def delete_schedule_endpoint(schedule_id: str):
+    """Delete a schedule."""
+    if not delete_schedule(schedule_id):
+        raise HTTPException(status_code=404, detail="Schedule not found")
+    return {"status": "deleted", "id": schedule_id}
+
+
+# Shared query logic (used by both /query and scheduler)
+async def _run_query(question: str, top_k: int, source_filter: str, category_filter: str) -> dict:
+    """Run a query and return structured results."""
+    import time
+    start = time.time()
+    emb = get_embedder()
+    store = get_vector_store()
+    query_embedding = emb.embed_query(question)
+    if backend_type == "lightweight":
+        results = store.search(query_embedding=query_embedding, n_results=top_k,
+                               source_filter=source_filter, category_filter=category_filter)
+    else:
+        where_filter = {}
+        if source_filter: where_filter["source"] = source_filter
+        if category_filter: where_filter["category"] = category_filter
+        results = store.search(query_embedding=query_embedding, n_results=top_k,
+                               where=where_filter if where_filter else None)
+
+    retrieved_docs = []
+    for r in results:
+        meta = r["metadata"]
+        distance = r.get("distance", 0.0)
+        retrieved_docs.append({
+            "id": r["id"], "title": meta.get("title", "Untitled"),
+            "source": meta.get("source", ""), "category": meta.get("category", ""),
+            "url": meta.get("url", ""), "published_at": meta.get("published_at", ""),
+            "content_preview": r["content"][:500] if r["content"] else "",
+            "relevance_score": round(max(0.0, 1.0 - distance), 4),
+        })
+
+    # Generate answer
+    answer = None
+    if retrieved_docs:
+        answer = await _generate_answer(question, [
+            RetrievedDocument(**d) for d in retrieved_docs
+        ])
+
+    return {
+        "question": question,
+        "answer": answer,
+        "retrieved_docs": retrieved_docs,
+        "query_time_ms": round((time.time() - start) * 1000, 1),
+    }
+
+
+# ── Scheduler helpers ──────────────────────────────────────
+async def _scheduled_query(question: str, top_k: int, source: str, category: str) -> dict:
+    """Run a query by calling the local API endpoint (avoids circular imports)."""
+    async with httpx.AsyncClient(timeout=120.0) as client:
+        resp = await client.post(
+            "http://127.0.0.1:8000/query",
+            json={"question": question, "top_k": top_k, "generate_answer": True,
+                  "source_filter": source, "category_filter": category},
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+
+async def _scheduled_push(message: str):
+    """Push notification — logs to file."""
+    logger.info(f"[SCHEDULE PUSH] {message[:200]}...")
+    push_log = Path(__file__).resolve().parent.parent / "data" / "push_log.jsonl"
+    push_log.parent.mkdir(parents=True, exist_ok=True)
+    with open(push_log, "a") as f:
+        f.write(json.dumps({"timestamp": __import__("datetime").datetime.now(
+            __import__("datetime").timezone.utc).isoformat(), "message": message}) + "\n")
+
+
+_scheduler = None
 
 
 # ── Serve frontend static files in production ─────────────
