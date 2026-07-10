@@ -1,4 +1,4 @@
-# 🏔️ Mining Intelligence Pipeline
+# 🏔️ 矿枢 MinerPivot
 
 > AI-powered semantic search over global mining news, critical mineral policy, and commodity prices — built for the modern mining analyst.
 
@@ -10,7 +10,7 @@
 
 ### Homepage
 
-![Mining Intelligence Homepage](demo/demo_homepage.png)
+![矿枢 MinerPivot Homepage](demo/demo_homepage.png)
 
 ### English Query — "What are the latest copper mining developments?"
 

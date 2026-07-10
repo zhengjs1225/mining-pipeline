@@ -1,4 +1,4 @@
-# DATA NOTES — Mining Intelligence Pipeline
+# DATA NOTES — 矿枢 MinerPivot
 
 ## Overview
 

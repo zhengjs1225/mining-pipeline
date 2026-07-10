@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Mining Intelligence Pipeline — Convenience Script
+# 矿枢 MinerPivot — Convenience Script
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"

@@ -73,7 +73,7 @@ export default function App() {
                 <path d="M12 2v4m0 12v4M2 12h4m12 0h4" />
               </svg>
             </div>
-            <span className="brand-name">Mining Intelligence</span>
+            <span className="brand-name">矿枢 MinerPivot</span>
             <button
               className="nav-btn"
               onClick={() => setSchedulesOpen(true)}
@@ -116,8 +116,7 @@ export default function App() {
           <div className="hero">
             <h2 className="hero-title">News · Policy · Prices</h2>
             <p className="hero-sub">
-              Search mining news, critical mineral policy, and commodity prices
-              — powered by semantic retrieval and AI answers
+              三源聚合 · 数据枢纽 · 产业核心 — 新闻 / 政策 / 价格汇聚中心
             </p>
           </div>
 
@@ -168,7 +167,7 @@ export default function App() {
         </Content>
 
         <Footer className="app-footer">
-          Mining Intelligence Pipeline · 7 sources · news / policy / price
+          矿枢 MinerPivot · 7 sources · news / policy / price
         </Footer>
       </Layout>
     </ConfigProvider>

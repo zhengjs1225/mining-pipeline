@@ -35,8 +35,8 @@ from pipeline.config import CHROMA_COLLECTION, LLM_BASE_URL, LLM_API_KEY, LLM_MO
 
 # ── App Setup ────────────────────────────────────────────
 app = FastAPI(
-    title="Mining Intelligence API",
-    description="Semantic search over mining news, policy, and price data",
+    title="矿枢 MinerPivot API",
+    description="矿枢 MinerPivot — 三源聚合管线：新闻 / 政策 / 价格，数据枢纽，产业核心",
     version="1.0.0",
 )
 
@@ -319,7 +319,7 @@ async def _generate_answer(
 @app.on_event("startup")
 async def startup():
     global _scheduler
-    logger.info("Mining Intelligence API starting up...")
+    logger.info("矿枢 MinerPivot API starting up...")
     # Pre-load embedder
     get_embedder()
     store = get_vector_store()
@@ -335,7 +335,7 @@ async def shutdown():
     global _scheduler
     if _scheduler:
         _scheduler.stop()
-    logger.info("Mining Intelligence API shutting down...")
+    logger.info("矿枢 MinerPivot API shutting down...")
 
 
 # ── Schedule CRUD ──────────────────────────────────────────

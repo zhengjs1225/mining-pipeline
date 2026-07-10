@@ -179,7 +179,7 @@ class ScheduleRunner:
     @staticmethod
     def _format_message(schedule: Dict, result: Dict) -> str:
         lines = [
-            f"## Mining Intelligence — 定时推送",
+            f"## 矿枢 MinerPivot — 定时推送",
             f"**查询:** {schedule['question']}",
             f"**时间:** {_now_iso()}",
             f"",
