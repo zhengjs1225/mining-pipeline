@@ -1,11 +1,11 @@
 import { useState, useMemo } from "react";
-import { ConfigProvider, Layout, theme, Typography, Drawer, Button } from "antd";
-import { ScheduleOutlined } from "@ant-design/icons";
+import { ConfigProvider, Layout, theme, Typography, Button } from "antd";
+import { SettingOutlined } from "@ant-design/icons";
 import ThemeToggle from "./components/ThemeToggle";
+import SettingsDrawer from "./components/SettingsDrawer";
 import SearchBar from "./components/SearchBar";
 import AnswerCard from "./components/AnswerCard";
 import ResultCard from "./components/ResultCard";
-import ScheduleManager from "./components/ScheduleManager";
 import StatsBar from "./components/StatsBar";
 import { useQuery } from "./hooks/useQuery";
 import "./App.css";
@@ -16,7 +16,7 @@ const { Text } = Typography;
 export default function App() {
   const { loading, result, error, run } = useQuery();
   const [lastQuestion, setLastQuestion] = useState("");
-  const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem("theme");
     return saved !== "light";
@@ -72,36 +72,26 @@ export default function App() {
               </svg>
             </div>
             <span className="brand-name">Mining Intelligence</span>
-            <Button
-              type="text"
-              size="small"
-              icon={<ScheduleOutlined />}
-              onClick={() => setScheduleOpen(true)}
-              style={{ marginLeft: 8, fontWeight: 500, fontSize: 13 }}
-            >
-              Schedules
-            </Button>
           </div>
           <div className="header-right">
             <StatsBar />
             <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
+            <Button
+              type="text"
+              icon={<SettingOutlined style={{ fontSize: 18 }} />}
+              onClick={() => setSettingsOpen(true)}
+              style={{ color: "var(--text-secondary)", marginLeft: 4 }}
+            />
           </div>
         </Header>
 
-        {/* ── Schedules Drawer (left side) ── */}
-        <Drawer
-          title={null}
-          placement="left"
-          width={480}
-          open={scheduleOpen}
-          onClose={() => setScheduleOpen(false)}
-          styles={{
-            body: { padding: "12px 20px" },
-            header: { display: "none" },
-          }}
-        >
-          <ScheduleManager embedded />
-        </Drawer>
+        {/* ── Settings Drawer ── */}
+        <SettingsDrawer
+          open={settingsOpen}
+          onClose={() => setSettingsOpen(false)}
+          isDark={isDark}
+          onToggleTheme={toggleTheme}
+        />
 
         {/* ── Main Content ── */}
         <Content className="app-content">
@@ -115,11 +105,7 @@ export default function App() {
 
           <SearchBar onSearch={handleSearch} loading={loading} />
 
-          {error && (
-            <div className="error-banner">
-              <span>{error}</span>
-            </div>
-          )}
+          {error && <div className="error-banner"><span>{error}</span></div>}
 
           {loading && (
             <div className="loading-state">
