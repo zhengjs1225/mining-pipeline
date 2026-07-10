@@ -1,13 +1,13 @@
 # Render Blueprint — auto-deploy from GitHub
 # 1. Go to https://dashboard.render.com
 # 2. Click "New" → "Blueprint"
-# 3. Connect your GitHub repo: zhengjs1225/mining-pipeline
+# 3. Connect your GitHub repo: zhengjs1225/MinerPivot
 # 4. Render reads this file and auto-deploys
 # Docs: https://render.com/docs/blueprint-spec
 
 services:
   - type: web
-    name: mining-pipeline
+    name: miner-pivot
     runtime: docker
     plan: free
     region: singapore

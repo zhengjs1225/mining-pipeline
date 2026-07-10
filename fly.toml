@@ -1,4 +1,4 @@
-app = "mining-pipeline"
+app = "miner-pivot"
 primary_region = "nrt"
 
 [build]

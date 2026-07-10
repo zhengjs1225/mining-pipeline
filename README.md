@@ -127,7 +127,7 @@ Retrieved: 3 documents | Query time: 1636ms | Total corpus: 579 docs
 
 ### 1. Clone & Install
 ```bash
-git clone https://github.com/zhengjs1225/mining-pipeline.git
+git clone https://github.com/zhengjs1225/MinerPivot.git
 cd mining-pipeline
 
 # Install Python dependencies
