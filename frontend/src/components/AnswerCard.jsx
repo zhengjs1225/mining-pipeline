@@ -1,7 +1,7 @@
 import { Card, Alert, Typography, Space } from "antd";
 import { RobotOutlined, WarningOutlined } from "@ant-design/icons";
 
-const { Text, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 export default function AnswerCard({ answer }) {
   if (!answer) return null;
@@ -16,7 +16,13 @@ export default function AnswerCard({ answer }) {
         type="warning"
         showIcon
         icon={<WarningOutlined />}
-        style={{ marginBottom: 20 }}
+        style={{
+          marginBottom: 20,
+          borderRadius: 16,
+          background: "rgba(255,170,0,.06)",
+          border: "1px solid rgba(255,170,0,.15)",
+          backdropFilter: "blur(12px)",
+        }}
       />
     );
   }
@@ -25,19 +31,24 @@ export default function AnswerCard({ answer }) {
     <Card
       title={
         <Space>
-          <RobotOutlined style={{ color: "#1677ff" }} />
-          <span style={{ color: "#fff" }}>AI Answer</span>
+          <div style={{
+            width: 24, height: 24, borderRadius: "50%",
+            background: "linear-gradient(135deg, #d4855e 0%, #c9a85c 100%)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <RobotOutlined style={{ color: "#fff", fontSize: 13 }} />
+          </div>
+          <span style={{ color: "#e8ecf4", fontWeight: 500, fontSize: 15 }}>AI Answer</span>
         </Space>
       }
-      style={{
-        marginBottom: 20,
-        background: "#1a1f3a",
-        borderColor: "#2a3a5c",
-      }}
-      headStyle={{ borderColor: "#2a3a5c", color: "#fff" }}
+      style={{ marginBottom: 20 }}
+      headStyle={{ borderColor: "rgba(255,255,255,.06)", minHeight: 48 }}
       bodyStyle={{ padding: "16px 20px" }}
     >
-      <Paragraph style={{ color: "#d0d5e0", fontSize: 15, lineHeight: 1.8, margin: 0, whiteSpace: "pre-wrap" }}>
+      <Paragraph
+        className="answer-body"
+        style={{ color: "#c8d0e0", margin: 0, whiteSpace: "pre-wrap" }}
+      >
         {answer}
       </Paragraph>
     </Card>

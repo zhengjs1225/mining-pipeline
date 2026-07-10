@@ -1,88 +1,136 @@
 /* ═══════════════════════════════════════════════════════
-   Mining Intelligence — Industrial Terminal Theme
-   Design System: mining-terminal (OpenDesign)
+   Mining Intelligence — Neural Mineral Theme
+   Fusion: Gemini Neural Expressive × Industrial Mining
    ═══════════════════════════════════════════════════════ */
 
 /* ── Fonts ───────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
 
 /* ── Design Tokens ────────────────────────────────────── */
 :root {
-  --bg-deep:     #0a0e17;
-  --bg-primary:  #0f1624;
-  --bg-elevated: #141c2e;
-  --bg-surface:  #1a2440;
-  --bg-hover:    #1e2d50;
+  /* Mineral Spectrum (Gemini-inspired gradient palette) */
+  --mineral-deep:    #0a0f1a;
+  --mineral-earth:   #111827;
+  --mineral-slate:   #1a2332;
+  --mineral-surface: #1e2d3d;
 
-  --fg-primary:  #e8ecf4;
-  --fg-secondary:#8899bb;
-  --fg-muted:    #556688;
+  /* Warm metallic accents */
+  --copper:      #d4855e;
+  --copper-soft: #e8b89d;
+  --gold:        #c9a85c;
+  --gold-soft:   #dfc98a;
+  --teal:        #5ec4d0;
+  --teal-soft:   #8ddbe3;
 
-  --border-subtle:  #1a2a44;
-  --border-default: #243860;
-
-  --accent-copper:  #d4855e;
-  --accent-nickel:  #8a9bad;
-  --accent-zinc:    #a0b4c8;
-  --accent-gold:    #c9a85c;
-  --accent-lithium: #7eb8c9;
-
+  /* Category colors */
   --cat-news:   #d4855e;
-  --cat-policy: #5599dd;
-  --cat-price:  #4dbd8a;
+  --cat-policy: #6b9ce8;
+  --cat-price:  #5ec4d0;
 
-  --font-display: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --font-body:    'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+  /* Surfaces */
+  --bg-root:      var(--mineral-deep);
+  --bg-card:      rgba(26,35,50,.7);
+  --bg-card-hover: rgba(30,45,60,.85);
+  --bg-input:     rgba(15,22,34,.8);
+  --bg-glass:     rgba(26,35,50,.55);
 
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Text */
+  --text-primary:   #eef0f6;
+  --text-secondary: #8899bb;
+  --text-muted:     #556680;
+
+  /* Borders */
+  --border-glass:  rgba(255,255,255,.06);
+  --border-soft:   rgba(255,255,255,.10);
+  --border-glow:   rgba(212,133,94,.25);
+
+  /* Typography */
+  --font-display: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+  --font-body:    'Noto Sans SC', 'PingFang SC', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* Motion */
+  --ease-gemini: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Global Reset ─────────────────────────────────────── */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  background: var(--bg-deep);
-  color: var(--fg-secondary);
+  background: var(--bg-root);
+  color: var(--text-secondary);
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  /* Geological noise texture */
-  background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(212,133,94,.03) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(126,184,201,.03) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 80%, rgba(138,155,173,.02) 0%, transparent 50%);
+  overflow-x: hidden;
 }
 
-/* ── Subtle geological grid ───────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   Gemini-inspired Mineral Spectrum Background
+   Multi-layered soft gradients + particle field
+   ═══════════════════════════════════════════════════════ */
+
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.008) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.008) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
   z-index: 0;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  pointer-events: none;
+  /* Spectrum gradient — deep blue → purple → copper → teal (warm mineral shift) */
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 20%, rgba(110,140,200,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 75% 30%, rgba(212,133,94,.05) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 70% at 60% 80%, rgba(94,196,208,.04) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 20% 70%, rgba(201,168,92,.03) 0%, transparent 45%);
+}
+
+/* ── Particle field (mineral dust) ────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 15% 25%, rgba(212,133,94,.3), transparent),
+    radial-gradient(1px 1px at 28% 42%, rgba(201,168,92,.25), transparent),
+    radial-gradient(1.5px 1.5px at 55% 18%, rgba(110,140,200,.3), transparent),
+    radial-gradient(1px 1px at 72% 55%, rgba(94,196,208,.25), transparent),
+    radial-gradient(1px 1px at 38% 68%, rgba(212,133,94,.2), transparent),
+    radial-gradient(1.5px 1.5px at 62% 35%, rgba(201,168,92,.3), transparent),
+    radial-gradient(1px 1px at 85% 72%, rgba(110,140,200,.2), transparent),
+    radial-gradient(1px 1px at 10% 78%, rgba(94,196,208,.2), transparent),
+    radial-gradient(1.5px 1.5px at 45% 85%, rgba(212,133,94,.25), transparent),
+    radial-gradient(1px 1px at 92% 12%, rgba(201,168,92,.2), transparent);
+  animation: particleDrift 20s ease-in-out infinite;
+}
+
+@keyframes particleDrift {
+  0%, 100% { opacity: .7; transform: translate(0, 0); }
+  25%      { opacity: 1; transform: translate(2px, -3px); }
+  50%      { opacity: .6; transform: translate(-1px, 2px); }
+  75%      { opacity: .9; transform: translate(3px, -1px); }
 }
 
 /* ── Layout ───────────────────────────────────────────── */
 .app-layout { min-height: 100vh; background: transparent; position: relative; z-index: 1; }
 
+/* ═══════════════════════════════════════════════════════
+   Header — Soft glass with subtle blur
+   ═══════════════════════════════════════════════════════ */
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 28px;
   height: 56px;
-  background: rgba(15,22,36,.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(17,24,39,.75);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--border-glass);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -94,205 +142,325 @@ body::before {
   gap: 10px;
 }
 
-.header-left h4 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--fg-primary);
+.header-left .app-logo {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--copper) 0%, var(--gold) 50%, var(--teal) 100%);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 16px rgba(212,133,94,.25);
+  animation: logoGlow 4s ease-in-out infinite;
 }
 
-/* ── Hero ─────────────────────────────────────────────── */
-.hero {
-  text-align: center;
-  margin-bottom: 32px;
-  padding: 24px 0 8px;
-}
-
-.hero h2 {
-  font-family: var(--font-display);
-  font-size: 2.2rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--accent-copper) 0%, var(--accent-gold) 50%, var(--accent-lithium) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 8px;
+@keyframes logoGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(212,133,94,.2); }
+  50%      { box-shadow: 0 0 24px rgba(212,133,94,.4); }
 }
 
 /* ── Content ──────────────────────────────────────────── */
 .app-content {
-  max-width: 920px;
+  max-width: 880px;
   margin: 0 auto;
-  padding: 28px 24px 56px;
+  padding: 32px 24px 56px;
   position: relative;
   z-index: 1;
 }
 
-/* ── Search ───────────────────────────────────────────── */
-.search-section { margin-bottom: 24px; }
-
-/* ── Glowing border on focus ──────────────────────────── */
-.ant-input-affix-wrapper:focus-within {
-  box-shadow: 0 0 0 2px rgba(212,133,94,.25), 0 0 24px rgba(212,133,94,.08) !important;
-  border-color: var(--accent-copper) !important;
+/* ═══════════════════════════════════════════════════════
+   Hero — Gemini-style gradient typography
+   ═══════════════════════════════════════════════════════ */
+.hero {
+  text-align: center;
+  margin-bottom: 36px;
+  padding: 20px 0 4px;
 }
 
-/* ── Cards ────────────────────────────────────────────── */
-.ant-card {
-  border-radius: 10px !important;
-  background: var(--bg-elevated) !important;
-  border: 1px solid var(--border-subtle) !important;
-  transition: border-color var(--ease-out) 200ms, box-shadow var(--ease-out) 200ms;
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  background: linear-gradient(135deg, var(--copper-soft) 0%, var(--gold) 35%, var(--teal-soft) 70%, var(--copper) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: spectrumShift 6s ease-in-out infinite;
+  margin-bottom: 10px;
 }
 
-.ant-card:hover {
-  border-color: var(--border-default) !important;
-  box-shadow: 0 2px 12px rgba(0,0,0,.3);
+@keyframes spectrumShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
 }
 
-/* ── Tags ─────────────────────────────────────────────── */
-.ant-tag { border-radius: 5px !important; font-family: var(--font-mono); font-size: 12px; }
-
-/* ── Inputs ───────────────────────────────────────────── */
-.ant-input {
-  background: var(--bg-primary) !important;
-  border-color: var(--border-subtle) !important;
-  color: var(--fg-primary) !important;
+.hero-sub {
   font-family: var(--font-body);
   font-size: 15px;
+  font-weight: 300;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto;
 }
 
-.ant-input::placeholder { color: var(--fg-muted) !important; }
+/* ═══════════════════════════════════════════════════════
+   Search — Pill-shaped Gemini-style input
+   ═══════════════════════════════════════════════════════ */
+.search-section { margin-bottom: 28px; }
+
+/* ── Pill-shaped search ───────────────────────────────── */
+.ant-input-affix-wrapper {
+  border-radius: 28px !important;
+  padding: 6px 8px 6px 20px !important;
+  background: var(--bg-input) !important;
+  border: 1px solid var(--border-soft) !important;
+  backdrop-filter: blur(8px);
+  transition: all var(--ease-smooth) 300ms !important;
+}
+
+.ant-input-affix-wrapper:focus-within,
+.ant-input-affix-wrapper:hover {
+  border-color: rgba(212,133,94,.35) !important;
+  box-shadow: 0 0 0 3px rgba(212,133,94,.08), 0 0 24px rgba(212,133,94,.06) !important;
+  background: rgba(20,30,46,.9) !important;
+}
+
+.ant-input {
+  font-family: var(--font-body) !important;
+  font-size: 15px !important;
+  font-weight: 300 !important;
+  color: var(--text-primary) !important;
+  background: transparent !important;
+}
+
+.ant-input::placeholder {
+  color: var(--text-muted) !important;
+  font-weight: 300 !important;
+}
+
+/* ── Search button (pill right side) ──────────────────── */
+.ant-input-search .ant-input-group-addon .ant-btn {
+  border-radius: 22px !important;
+  padding: 4px 20px !important;
+  font-weight: 500 !important;
+  font-family: var(--font-display) !important;
+  font-size: 14px !important;
+  transition: all var(--ease-smooth) 250ms !important;
+}
 
 .ant-input-search .ant-input-group-addon .ant-btn-primary {
-  background: var(--accent-copper) !important;
-  border-color: var(--accent-copper) !important;
-  font-family: var(--font-display);
-  font-weight: 600;
+  background: linear-gradient(135deg, var(--copper) 0%, #c97a52 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 12px rgba(212,133,94,.25);
 }
 
 .ant-input-search .ant-input-group-addon .ant-btn-primary:hover {
-  background: #e0956e !important;
-  box-shadow: 0 0 16px rgba(212,133,94,.3);
+  background: linear-gradient(135deg, #e0956e 0%, var(--copper) 100%) !important;
+  box-shadow: 0 4px 20px rgba(212,133,94,.4);
+  transform: translateY(-1px);
 }
 
-/* ── Select ───────────────────────────────────────────── */
-.ant-select-selector {
-  background: var(--bg-primary) !important;
-  border-color: var(--border-subtle) !important;
-  color: var(--fg-secondary) !important;
+/* ── Filters (soft selects) ───────────────────────────── */
+.ant-select .ant-select-selector {
+  border-radius: 20px !important;
+  background: rgba(15,22,34,.7) !important;
+  border: 1px solid var(--border-soft) !important;
+  backdrop-filter: blur(6px);
 }
 
-/* ── Progress ring label ──────────────────────────────── */
-.ant-progress .ant-progress-text { color: var(--fg-secondary) !important; font-family: var(--font-mono); font-weight: 600; }
+/* ── Example tags (Gemini-style chips) ────────────────── */
+.ant-tag {
+  border-radius: 20px !important;
+  padding: 4px 14px !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  transition: all var(--ease-smooth) 200ms !important;
+  cursor: pointer !important;
+}
 
-/* ── Layout header overrides ──────────────────────────── */
-.ant-layout-header { background: transparent !important; padding: 0 28px !important; }
-.ant-layout-footer { background: transparent !important; }
+.ant-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
 
-/* ── Error banner ─────────────────────────────────────── */
-.error-banner {
+/* ═══════════════════════════════════════════════════════
+   Cards — Glassmorphism with soft glow
+   ═══════════════════════════════════════════════════════ */
+.ant-card {
+  border-radius: 16px !important;
+  background: var(--bg-glass) !important;
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid var(--border-glass) !important;
+  transition: all var(--ease-smooth) 300ms !important;
+}
+
+.ant-card:hover {
+  background: rgba(30,45,60,.75) !important;
+  border-color: rgba(255,255,255,.10) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.04);
+  transform: translateY(-1px);
+}
+
+/* ── Answer card special glow ─────────────────────────── */
+.answer-card .ant-card {
+  background: rgba(26,40,60,.6) !important;
+  border-color: rgba(212,133,94,.12) !important;
+  box-shadow: 0 0 32px rgba(212,133,94,.06);
+}
+
+.answer-card .ant-card:hover {
+  border-color: rgba(212,133,94,.2) !important;
+  box-shadow: 0 0 40px rgba(212,133,94,.10);
+}
+
+/* ── Progress ring ────────────────────────────────────── */
+.ant-progress .ant-progress-text {
+  font-family: var(--font-mono) !important;
+  font-weight: 500 !important;
+  font-size: 11px !important;
+}
+
+/* ── AI Answer paragraph ──────────────────────────────── */
+.answer-body {
+  font-weight: 300;
+  line-height: 1.85;
+  font-size: 15px;
+}
+
+/* ── Key info bold (Gemini emphasizes key info) ───────── */
+.answer-body strong,
+.answer-body b {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════
+   Loading — Gemini-style pulsing orb
+   ═══════════════════════════════════════════════════════ */
+.loading-state {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 12px 18px;
-  margin-bottom: 16px;
-  background: rgba(255,77,79,.08);
-  border: 1px solid rgba(255,77,79,.2);
-  border-radius: 8px;
-  color: #ff7875;
+  gap: 16px;
+  padding: 40px 0;
+}
+
+/* Pulsing AI orb */
+.loading-orb {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--copper) 0%, var(--gold) 50%, var(--teal) 100%);
+  background-size: 200% 200%;
+  animation: orbPulse 2s ease-in-out infinite, spectrumShift 4s ease-in-out infinite;
+  box-shadow: 0 0 32px rgba(212,133,94,.25);
+}
+
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1);   opacity: .8; }
+  50%      { transform: scale(1.12); opacity: 1; }
+}
+
+/* Loading text */
+.loading-text {
+  font-family: var(--font-display);
   font-size: 14px;
+  font-weight: 400;
+  color: var(--text-muted);
+  animation: fadeInOut 1.8s ease-in-out infinite;
 }
 
-/* ── Loading shimmer ──────────────────────────────────── */
-.loading-state { display: flex; flex-direction: column; gap: 12px; padding: 20px 0; }
-
-.loading-shimmer {
-  height: 18px;
-  background: linear-gradient(90deg, var(--bg-surface) 0%, #1e3050 50%, var(--bg-surface) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 1.6s ease-in-out infinite;
-  border-radius: 6px;
-  width: 100%;
-}
-.loading-shimmer.short  { width: 55%; }
-.loading-shimmer.medium { width: 75%; }
-
-@keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+@keyframes fadeInOut {
+  0%, 100% { opacity: .4; }
+  50%      { opacity: .8; }
 }
 
-/* ── Results ──────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   Results — staggered card entrance (Gemini flow)
+   ═══════════════════════════════════════════════════════ */
 .results-section { margin-top: 16px; }
 
 .results-meta {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   padding: 8px 0;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .results-meta strong {
   font-family: var(--font-display);
   font-weight: 600;
-  color: var(--fg-primary);
+  color: var(--text-primary);
 }
 
-/* ── Empty state ──────────────────────────────────────── */
+/* Staggered card animation */
+@keyframes cardRise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.result-card { animation: cardRise .5s var(--ease-gemini) both; }
+.result-card:nth-child(1) { animation-delay: .00s; }
+.result-card:nth-child(2) { animation-delay: .06s; }
+.result-card:nth-child(3) { animation-delay: .12s; }
+.result-card:nth-child(4) { animation-delay: .18s; }
+.result-card:nth-child(5) { animation-delay: .24s; }
+
+/* ═══════════════════════════════════════════════════════
+   Error & Empty states
+   ═══════════════════════════════════════════════════════ */
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  margin-bottom: 16px;
+  background: rgba(255,77,79,.07);
+  border: 1px solid rgba(255,77,79,.15);
+  border-radius: 16px;
+  color: #ff7875;
+  font-size: 14px;
+  font-weight: 300;
+  backdrop-filter: blur(8px);
+}
+
 .empty-state {
   text-align: center;
   padding: 100px 20px;
 }
 
-.empty-state span {
-  color: var(--fg-muted);
-  font-family: var(--font-body);
+.empty-state .empty-icon {
+  width: 56px; height: 56px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border-glass);
+  display: flex; align-items: center; justify-content: center;
+  opacity: .5;
 }
 
-/* ── Footer ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   Footer
+   ═══════════════════════════════════════════════════════ */
 .app-footer {
   text-align: center;
   padding: 16px;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border-glass);
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--fg-muted);
+  font-weight: 400;
+  color: var(--text-muted);
+  opacity: .6;
 }
 
-/* ── Motion: Answer card entrance ─────────────────────── */
-@keyframes answerSlideIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.answer-card {
-  animation: answerSlideIn 0.4s var(--ease-spring);
-}
-
-/* ── Motion: Result card stagger ──────────────────────── */
-.result-card { animation: answerSlideIn 0.4s var(--ease-spring) both; }
-.result-card:nth-child(1) { animation-delay: 0.00s; }
-.result-card:nth-child(2) { animation-delay: 0.05s; }
-.result-card:nth-child(3) { animation-delay: 0.10s; }
-.result-card:nth-child(4) { animation-delay: 0.15s; }
-.result-card:nth-child(5) { animation-delay: 0.20s; }
-
-/* ── Pulse glow on search button ──────────────────────── */
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 8px rgba(212,133,94,.15); }
-  50%      { box-shadow: 0 0 20px rgba(212,133,94,.35); }
-}
-
-.ant-btn-primary:not(:disabled) {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
+/* ── Layout overrides ─────────────────────────────────── */
+.ant-layout-header { background: transparent !important; padding: 0 28px !important; }
+.ant-layout-footer { background: transparent !important; }
 
 /* ── Scrollbar ────────────────────────────────────────── */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: var(--bg-hover); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--fg-muted); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.14); }
