@@ -72,16 +72,16 @@ export default function App() {
               </svg>
             </div>
             <span className="brand-name">Mining Intelligence</span>
-          </div>
-          <div className="header-right">
-            <StatsBar />
-            <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
             <Button
               type="text"
               icon={<SettingOutlined style={{ fontSize: 18 }} />}
               onClick={() => setSettingsOpen(true)}
-              style={{ color: "var(--text-secondary)", marginLeft: 4 }}
+              style={{ color: "var(--text-secondary)", marginLeft: 6 }}
             />
+          </div>
+          <div className="header-right">
+            <StatsBar />
+            <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
           </div>
         </Header>
 
